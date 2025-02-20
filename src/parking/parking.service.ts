@@ -8,7 +8,6 @@ export class ParkingService {
     // deprecated - using hashmaps to improve time complexity
     // private parkingLot: ParkingSlot[] = [];
 
-    // Using hashmap to improve time complexity from O(n) -> O(1)
     private slotMap: Map<number, ParkingSlot> = new Map();
     private registrationMap: Map<string, number> = new Map();
     private colorMap: Map<string, Set<number>> = new Map();

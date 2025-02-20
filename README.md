@@ -21,6 +21,7 @@ A simple Parking Lot Management System built with **NestJS**. This project allow
 - Check status of all parking slots.
 - Retrieve slots based on car color or registration number.
 - Get a list of all occupied slots.
+- **Optimized with hashmaps to reduce time complexity to O(1).**
 
 ## 📋 API Endpoints
 
