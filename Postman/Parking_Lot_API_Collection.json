@@ -31,7 +31,7 @@
 		{
 			"name": "Expand Parking Lot",
 			"request": {
-				"method": "POST",
+				"method": "PATCH",
 				"header": [],
 				"url": {
 					"raw": "http://{{base_url}}/parking/expand/3",
@@ -60,7 +60,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{ \"registrationNumber\": \"KA-01-HH-7878\", \"color\": \"White\" }"
+					"raw": "{ \"registrationNumber\": \"KA-01-HH-7848\", \"color\": \"White\" }"
 				},
 				"url": {
 					"raw": "http://{{base_url}}/parking/park",
@@ -296,6 +296,85 @@
 					"path": [
 						"parking",
 						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Tickets",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{base_url}}/parking/tickets",
+					"protocol": "http",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"parking",
+						"tickets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Ticket By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{base_url}}/parking/ticket/2d3ee5f3-fd97-4688-ba08-f18447dc5421",
+					"protocol": "http",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"parking",
+						"ticket",
+						"2d3ee5f3-fd97-4688-ba08-f18447dc5421"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Active Tickets",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{base_url}}/parking/tickets/active",
+					"protocol": "http",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"parking",
+						"tickets",
+						"active"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Closed Tickets",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{base_url}}/parking/tickets/closed",
+					"protocol": "http",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"parking",
+						"tickets",
+						"closed"
 					]
 				}
 			},
