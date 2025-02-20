@@ -81,8 +81,7 @@ describe('ParkingService', () => {
 
     it('should return message if no car found', () => {
       service.initParkingLot(2);
-      const result = service.getRegistrationNumberByColor('Purple');
-      expect(result).toEqual({ message: 'No car found with color Purple' });
+      expect(() => service.getRegistrationNumberByColor('Purple')).toThrow('No car found with color Purple');
     });
   });
 });

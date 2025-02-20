@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ParkingService } from './parking.service';
 import { ParkCarDto } from './dto/park-car.dto';
 
@@ -13,7 +13,7 @@ export class ParkingController {
         return this.parkingService.initParkingLot(+size);
     }
 
-    @Post('expand/:size')
+    @Patch('expand/:size')
     expandParkingLot(@Param('size') size: string) {
         return this.parkingService.expandParkingLot(+size);
     }
