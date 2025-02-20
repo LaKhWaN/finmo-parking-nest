@@ -5,7 +5,7 @@
 		"description": "## 📊 **Parking Lot API Overview**\n\nThe **Parking Lot API** allows you to manage a parking lot system with functionalities to initialize, expand, park, exit, and query parking slots. This API supports CRUD operations to effectively manage cars and slots in the parking lot.\n\n### ✅ **Key Features:**\n\n- **Initialize** and **expand** parking slots dynamically.\n    \n- **Park** cars with registration numbers and colors.\n    \n- **Exit** cars from specific slots.\n    \n- **Fetch occupied slots**, registrations by color, and slot numbers by registration.\n    \n- **Search** slots based on car color or registration number.\n    \n\n### 📁 **Base URL:**\n\nUse the variable `{{base_url}}` for flexibility.\n\n- **Example Local:** `http://localhost`\n    \n- **Example Deployed:** `https://yourdomain.com`\n    \n\n### 🛠️ **Endpoints:**\n\n| **Method** | **Endpoint** | **Description** |\n| --- | --- | --- |\n| `POST` | `/parking/init/{size}` | Initialize parking lot with given slots |\n| `POST` | `/parking/expand/{slots}` | Add more slots to the parking lot |\n| `POST` | `/parking/park` | Park a car in the lot |\n| `POST` | `/parking/exit/{slot_number}` | Exit car from a slot |\n| `GET` | `/parking/occupied` | View all occupied slots |\n| `GET` | `/parking/registration/{color}` | Get car registrations by color |\n| `GET` | `/parking/slot/{registration_number}` | Get slot number by car registration |\n| `GET` | `/parking/slots/{color}` | Get all slots occupied by a color |\n\n### ⚡ **Edge Cases to Test:**\n\n- Parking a car when the lot is full.\n    \n- Exiting a car from an empty or invalid slot.\n    \n- Searching for non-existent car colors or registration numbers.\n    \n\n### 💡 **Tips:**\n\n- Ensure `{{base_url}}` is correctly set in your environment before making requests.\n    \n- Test edge cases to validate error handling.\n    \n- Expand parking slots if you encounter a **\"Parking Full\"** response.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "34287110",
-		"_collection_link": "https://finmo-parking.postman.co/workspace/ece1f1d4-8cea-49fa-8a18-66d72b120f52/collection/34287110-0e15c297-5e4f-43f5-b645-2bb12095fda2?action=share&source=collection_link&creator=34287110"
+		"_collection_link": "https://finmo-parking.postman.co/workspace/Finmo-Parking-Workspace~ece1f1d4-8cea-49fa-8a18-66d72b120f52/collection/34287110-0e15c297-5e4f-43f5-b645-2bb12095fda2?action=share&source=collection_link&creator=34287110"
 	},
 	"item": [
 		{
@@ -258,6 +258,44 @@
 						"parking",
 						"slots",
 						"White"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Clear Parking",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{base_url}}/parking/clear",
+					"protocol": "http",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"parking",
+						"clear"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Parking Status",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{base_url}}/parking/status",
+					"protocol": "http",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"parking",
+						"status"
 					]
 				}
 			},

@@ -42,8 +42,8 @@ A simple Parking Lot Management System built with **NestJS**. This project allow
 1. **Clone the repository:**
 
    ```bash
-   git clone <https://github.com/LaKhWaN/finmo-parking-nest>
-   cd <finmo-parking-nest>
+   git clone https://github.com/LaKhWaN/finmo-parking-nest
+   cd finmo-parking-nest
    ```
 
 2. **Install dependencies:**

@@ -7,7 +7,7 @@ import { Car } from './models/car.model';
 export class ParkingService {
     private parkingLot: ParkingSlot[] = [];
 
-    // Initialize parkingLot with a size
+    // Initialize parkingLot with given size
     initParkingLot(size: number): ParkingSlot[] {
 
         // check if size is positive number
