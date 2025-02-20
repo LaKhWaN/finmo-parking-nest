@@ -64,4 +64,25 @@ export class ParkingController {
     getSlotsByCarColor(@Param('carColor') carColor: string) {
         return this.parkingService.getSlotsByCarColor(carColor);
     }
+
+    // === Ticket System ===
+    @Get('tickets')
+    getAllTickets() {
+        return this.parkingService.getAllParkingTickets();
+    }
+
+    @Get('ticket/:ticketId')
+    getTicketById(@Param('ticketId') ticketId: string) {
+        return this.parkingService.getTicketById(ticketId);
+    }
+
+    @Get('/tickets/active')
+    getActiveTickets(){
+        return this.parkingService.getActiveTickets();
+    }
+
+    @Get('tickets/closed')
+    getClosedTickets() {
+        return this.parkingService.getClosedTickets();
+    }
 }

@@ -2,15 +2,26 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { ParkingSlot } from './models/parking-slot.model';
 import { ParkCarDto } from './dto/park-car.dto';
 import { Car } from './models/car.model';
+import { Ticket } from './models/ticket.model';
+import {v4 as uuidv4} from 'uuid';
 
 @Injectable()
 export class ParkingService {
     // deprecated - using hashmaps to improve time complexity
     // private parkingLot: ParkingSlot[] = [];
 
+    // Parking Slot related hash maps
     private slotMap: Map<number, ParkingSlot> = new Map();
     private registrationMap: Map<string, number> = new Map();
     private colorMap: Map<string, Set<number>> = new Map();
+
+    // Ticket related hash maps
+    private ticketMap: Map<string, Ticket> = new Map();
+    private activeTicketsMap: Map<string, Ticket> = new Map();
+    private closedTicketMap: Map<string, Ticket> = new Map();
+
+    // Price per second
+    private pricePerSecond = 10;
 
     // Initialize parkingLot with given size
     initParkingLot(size: number): ParkingSlot[] {
@@ -59,7 +70,7 @@ export class ParkingService {
     }
 
     // Park a car
-    parkCar(parkCarDto: ParkCarDto): ParkingSlot | {message: string} {
+    parkCar(parkCarDto: ParkCarDto): Ticket | {message: string} {
 
         // Check if car is already parked or not
         if(this.registrationMap.has(parkCarDto.registrationNumber)) 
@@ -91,8 +102,26 @@ export class ParkingService {
 
                 this.colorMap.get(newColor)?.add(slotId);
 
-                // Return the slot details
-                return slot;
+                // Return the slot details - deprecated: added ticket system so it returns ticket
+                // return slot;
+
+                // creating a ticket
+                const ticket: Ticket = {
+                    ticketId: uuidv4(),
+                    slotId: slotId,
+                    carDetails: newCar,
+                    status: 'active',
+                    createdAt: new Date().toISOString()
+                };
+
+                // adding to ticketMap
+                this.ticketMap.set(ticket.ticketId, ticket);
+
+                // adding to activeTicketMap
+                this.activeTicketsMap.set(ticket.ticketId, ticket);
+
+                // return the ticket
+                return ticket;
             }
         }
 
@@ -101,7 +130,7 @@ export class ParkingService {
     }
 
     // Exit a Car
-    exitCar(id: number): {message: string} {
+    exitCar(id: number): Ticket | {message: string} {
         const slot = this.slotMap.get(id);
         if(!slot) throw new BadRequestException(`No slot exists with slot id ${id}`);
         if(!slot.occupied) throw new BadRequestException(`No car is parked at slot ${id}`);
@@ -122,7 +151,24 @@ export class ParkingService {
         slot.car = null;
         slot.occupied = false;
 
-        return {message: `Car exited sucessfully at slot ${id}`};
+        // update the ticket and return it, compare from slotId
+        for(const ticket of this.activeTicketsMap.values()) {
+            if(ticket.slotId === id) {
+                ticket.exitedAt = new Date().toISOString();
+                const miliSeconds = new Date(ticket.exitedAt).getTime() - new Date(ticket.createdAt).getTime();
+                const bill = this.pricePerSecond * (miliSeconds/1000);
+                ticket.bill = bill;
+                ticket.status = 'closed';
+
+                // now add it to closedTicket and remove from active ticket
+                this.activeTicketsMap.delete(ticket.ticketId);
+                this.closedTicketMap.set(ticket.ticketId, ticket);
+
+                return ticket;
+            }
+        }
+
+        return {message: `No car found with id ${id}`};
     }
 
     // Fetching Details
@@ -177,5 +223,23 @@ export class ParkingService {
             if(slot) slots.push(slot);
         }
         return slots;
+    }
+
+    // === Ticket System ===
+    getAllParkingTickets(): Ticket[] {
+        return Array.from(this.ticketMap.values());
+    }
+
+    getTicketById(ticketId: string): Ticket | {message: string}{
+        const ticket = this.ticketMap.get(ticketId);
+        return ticket ?? {message: `No ticket found with id ${ticketId}`};
+    }
+
+    getActiveTickets(): Ticket[] {
+        return Array.from(this.activeTicketsMap.values());
+    }
+
+    getClosedTickets(): Ticket[] {
+        return Array.from(this.closedTicketMap.values());
     }
 }
