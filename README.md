@@ -22,6 +22,7 @@ A simple Parking Lot Management System built with **NestJS**. This project allow
 - Retrieve slots based on car color or registration number.
 - Get a list of all occupied slots.
 - **Optimized with hashmaps to reduce time complexity to O(1).**
+- Ticket system to track parking duration and calculate bills.
 
 ## 📋 API Endpoints
 
@@ -37,6 +38,10 @@ A simple Parking Lot Management System built with **NestJS**. This project allow
 | GET    | `/parking/registration/:carColor`   | Get registration numbers of cars by color         | `carColor` as URL parameter                 |
 | GET    | `/parking/slot/:registrationNumber` | Get slot number by car registration number        | `registrationNumber` as URL parameter       |
 | GET    | `/parking/slots/:carColor`          | Get all slot numbers for cars of a specific color | `carColor` as URL parameter                 |
+| GET    | `/parking/tickets`                  | Get all parking tickets                           | None                                        |
+| GET    | `/parking/ticket/:ticketId`         | Get ticket details by ticket ID                   | `ticketId` as URL parameter                 |
+| GET    | `/parking/tickets/active`           | Get all active tickets                            | None                                        |
+| GET    | `/parking/tickets/closed`           | Get all closed tickets                            | None                                        |
 
 ## 🏗️ Getting Started
 
